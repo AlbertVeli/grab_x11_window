@@ -1,0 +1,11 @@
+Shell script to calculate coordinates
+of an X11 window and then call ffmpeg
+to record screencast with those coordinates.
+
+Press q or Ctrl-C to stop recording.
+
+The resulting mkv file kan be converted to some other
+format again using ffmpeg. For instance:
+
+ffmpeg -i output.mkv -sameq -an output.avi
+
