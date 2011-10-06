@@ -1,11 +1,64 @@
-Shell script to calculate coordinates
-of an X11 window and then call ffmpeg
-to record screencast with those coordinates.
+What is this?
+=============
+
+This is a shell script to calculate coordinates
+of an X11 window and then call ffmpeg to record
+screencast with those coordinates.
 
 Press q or Ctrl-C to stop recording.
 
 The resulting mkv file kan be converted to some other
-format again using ffmpeg. For instance:
+format afterwards by using ffmpeg. For instance:
 
-ffmpeg -i output.mkv -sameq -an output.avi
+ ffmpeg -i output.mkv -sameq -an output.avi
+
+
+Requirements
+============
+
+1. xwininfo
+
+The script uses the program xwininfo to get the window coordinates.
+In Ubuntu and Debian xwininfo can be found in the x11-utils package.
+
+ # apt-get install x11-utils
+
+In gentoo xwininfo is a separate package, install it with:
+
+ # emerge xwininfo
+
+While some other GNU/Linux distributions (like fedora) place xwininfo
+in the package xorg-x11-utils. Install it with your usual package manager.
+
+
+2. ffmpeg
+
+The program ffmpeg is usually in a package of its own. Just install
+it with your package manager.
+
+If the script complains about missing features in ffmpeg
+you can try to grab the ffmpeg sources and compile them yourself
+with at least the flags:
+
+ ./configure --enable-x11grab --enable-libx264
+
+The configure might also want the flag --enable-gpl in order to enable x11grab.
+
+Get the ffmpeg sources from: http://ffmpeg.org/download.html
+
+
+OS X
+====
+
+Despite its name, most programs in Mac OS X actually does not use X (it
+uses something called Core Graphics or Quartz instead). Even if you
+compile ffmpeg with x11grab you will only be able to record
+applications that runs X, like gimp and wireshark. To record "native"
+applications you can try the QuickTime Player, which is included with
+Snow Leopard and newer (like Lion). There are also commersial alternatives
+(for instance Snapz Pro X) which can be used even if you run an earlier
+version of OS X, like Tiger or Leopard. Another option is to actually ask
+the kind ffmpeg developers if they might implement a "quartzgrab" format
+option sometime in the future.
+
 
