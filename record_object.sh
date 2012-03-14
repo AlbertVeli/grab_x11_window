@@ -40,7 +40,7 @@ read -p "Record sound? "
 if test "$REPLY" == "y"; then
     # Record sound using Alsa
     # (check rec volume in alsamixer if you get no sound)
-    snd='-f alsa -ac 2 -i $alsadev -acodec pcm_s16le'
+    snd="-f alsa -ac 2 -i $alsadev -acodec pcm_s16le"
 else
     # No sound
     snd='-an'
