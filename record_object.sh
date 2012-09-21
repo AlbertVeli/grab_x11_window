@@ -16,7 +16,7 @@ alsadev='hw:0,0'
 # Video codec for encoding. You might change this
 # if your ffmpeg does not support libx264. But
 # this setting gives best quality.
-vcodec='-vcodec libx264 -vpre lossless_ultrafast'
+vcodec='-vcodec libx264 -preset ultrafast -qp 0'
 
 
 if ! which xwininfo >/dev/null; then
@@ -59,7 +59,9 @@ height=`echo $txt | sed 's/^.*Height://' | awk '{print $1}'`
 read -p "Window is ${width}x${height}, continue (y/n)? "
 [ "$REPLY" == "y" ] || exit 1
 
+# Make sure width is divisible by 2
+width=$((${width} - $((${width} % 2))))
 
 # ffmpeg may or may not work with the x11grab option, it depends on the platform and compile time flags
-ffmpeg -f x11grab -r 25 -s ${width}x${height} -i :0.0${corner} $snd $vcodec -threads 0 output.mkv
-
+CMD="ffmpeg -f x11grab -r 25 -s ${width}x${height} -i :0.0${corner} $snd $vcodec -threads 0 output.mkv"
+exec $CMD
